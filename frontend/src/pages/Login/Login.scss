@@ -1,0 +1,191 @@
+@use "../../styles/utils/variables" as *;
+@use "../../styles/utils/mixins" as *;
+
+// To avoid autocompleion style issues in Chrome
+.login__textfield input:-webkit-autofill,
+.login__textfield input:-webkit-autofill:hover,
+.login__textfield input:-webkit-autofill:focus,
+.login__textfield input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px $primary-color-2 inset; // Background color
+  -webkit-text-fill-color: $text-color-1; // Text color
+  transition: background-color 5000s ease-in-out 0s; // Hack for Chrome
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 20px auto 0;
+  gap: 15px;
+  padding: 2rem;
+
+  &__textField {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    &__formlabel {
+      margin-bottom: 4px;
+    }
+
+    &__input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    &__input {
+      width: 100%;
+      padding: 10px 40px 10px 10px; /* espace pour le bouton */
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    &__input:focus {
+      outline: none;
+      border-color: #1976d2; /* style MUI */
+    }
+
+    &__input--error {
+      border-color: red;
+    }
+
+    &__helper-text {
+      color: red;
+      font-size: 0.75rem;
+      margin-top: 4px;
+    }
+
+    .toggle-password-visibility {
+      position: absolute;
+      right: 8px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: $text-color-1;
+      &:hover {
+        color: $primary-color-3;
+      }
+    }
+  }
+
+  &__button {
+    width: 100%;
+    padding: 10px;
+    background-color: #1976d2; /* remplace ton theme.palette.custom.c1 */
+    color: #fff; /* contrastText */
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  &__button:hover:not(:disabled) {
+    background-color: #1565c0;
+  }
+
+  &__button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  &__spinner {
+    height:100%;
+    aspect-ratio: 1/1;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    display: inline-block;
+    animation: spin 0.8s linear infinite;
+  }
+
+  &__checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  &__checkbox input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+
+  &__checkbox span {
+    display: flex;
+    align-items: center;
+    line-height: 1.2;
+  }
+
+  &__error {
+    animation: shake 1s ease;
+  }
+
+  &__link {
+    background: none;
+    border: none;
+    color: $secondary-color-1;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    font: inherit;
+  }
+
+  &__noaccount {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    .login__signin {
+      &:hover {
+        cursor: pointer;
+        color: $secondary-color-3;
+      }
+    }
+  }
+
+  @include responsive-tablet {
+    border-radius: 10px;
+    max-width: 500px;
+    gap: 20px;
+  }
+
+  @include responsive-desktop {
+    max-width: 700px;
+    gap: 25px;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+      transform: translateX(-10px);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+      transform: translateX(10px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+}

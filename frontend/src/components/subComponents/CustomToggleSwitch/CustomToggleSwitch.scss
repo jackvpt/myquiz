@@ -1,0 +1,49 @@
+@use "../../../styles/utils/variables" as *;
+@use "../../../styles/utils/mixins" as *;
+
+.container__toggleSwitch {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  &--button-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: $textFieldWidth;
+    gap:0.5rem;
+  }
+
+  &--button {
+    width: 40px;
+    height: 18px;
+    border: none;
+    border-radius: 1000px;
+    background: $primary-color-3;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    padding: 0;
+
+    &.active {
+      background: $secondary-color-1;
+    }
+
+    &.active .container__toggleSwitch--thumb {
+      transform: translateX(20px);
+    }
+  }
+
+  &--thumb {
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: $text-color-1;
+    transition: transform 0.2s ease;
+  }
+}

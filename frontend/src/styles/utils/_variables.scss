@@ -1,0 +1,35 @@
+// /* Fonts */
+$font_body: "Inter", sans-serif !default;
+$font_titles: "Inter", sans-serif;
+
+// /* Colors */
+$primary-color-1: #fff;
+$primary-color-2: #f2faff;
+$primary-color-3: #bbb;
+$primary-color-4: #999;
+$primary-color-5: #777;
+$primary-color-6: #555;
+
+$secondary-color-1: #1976d2;
+$secondary-color-2: #6faaee;
+$secondary-color-3: #d32f2f;
+
+$secondary-color-green-2: #388e3c;
+
+$paragraph-background: rgba(0, 0, 0, 0.2);
+
+$highlight: #ffd480;
+
+$text-color-1: #fff;
+$text-color-2: #000;
+$text-color-3: #347deb;
+
+$textFieldWidth: 250px;
+
+/* Responsive */
+$breakpoints: (
+  mobile: 370px,
+  tablet: 768px,
+  desktop: 1024px,
+  large-desktop: 1280px,
+);

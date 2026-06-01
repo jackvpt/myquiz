@@ -1,0 +1,19 @@
+@use "../../styles/utils/variables" as *;
+@use "../../styles/utils/mixins" as *;
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+
+  padding: 2rem 1rem;
+
+  &--icon {
+    justify-self: start;
+    font-size: 48px;
+    margin-left: 1rem;
+  }
+  h1 {
+    justify-self: center;
+  }
+}

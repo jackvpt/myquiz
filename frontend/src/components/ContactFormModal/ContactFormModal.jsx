@@ -1,0 +1,326 @@
+// 📁 CSS imports
+import "./ContactFormModal.scss"
+
+// 🌍 Library imports
+import emailjs from "@emailjs/browser"
+
+// 📦 React imports
+import { useState } from "react"
+
+// 🧩 MUI Core imports
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  FormControl,
+  FormLabel,
+  TextField,
+  Stack,
+  Alert,
+  CircularProgress,
+} from "@mui/material"
+
+/**
+ * Contact form modal component
+ * @param {Object} param - Component props
+ * @param {boolean} param.open - Modal open state
+ * @param {function} param.onClose - Function to call on modal close
+ * @returns {JSX.Element|null} Rendered modal or null
+ */
+const ContactFormModal = ({ open, onClose }) => {
+  // Form state
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    message: "",
+  })
+
+  // States
+  const [isFormValid, setIsFormValid] = useState(false)
+  const [emailError, setEmailError] = useState("") // Email validation error
+  const [messageStatus, setMessageStatus] = useState({
+    message: "",
+    severity: "success",
+  }) // Alert message state
+  const [isSending, setIsSending] = useState(false)
+
+  // Handle form input changes
+  const handleInputChange = (event) => {
+    const { name, value } = event.target
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
+    validForm()
+  }
+
+  // Validate input on blur
+  const handleInputBlur = (event) => {
+    const { name, value } = event.target
+    if (name === "email") isEmailValid(value)
+    validForm()
+  }
+
+  /**
+   * Handles sending the email via EmailJS
+   * @returns {Promise<void>}
+   */
+  const handleSendEmail = async () => {
+    if (!isFormValid) {
+      return
+    }
+
+    // Indicate sending state for circular icon
+    setIsSending(true)
+    // Show sending message
+    setMessageStatus({
+      message: "Envoi en cours...",
+      severity: "info",
+    })
+
+    try {
+      /**
+       * Send email using EmailJS service
+       * @see https://www.emailjs.com/docs/examples/reactjs/
+       */
+      const response = await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          message: formData.message,
+        },
+        {
+          publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        }
+      )
+
+      /* Check if the email was sent successfully */
+      if (response.text != "OK") {
+        setMessageStatus({
+          message: "Échec de l'envoi du message.",
+          severity: "error",
+        })
+        throw new Error("Error while sending email")
+      }
+
+      // Show success message
+      setMessageStatus({
+        message: "Message envoyé avec succès.",
+        severity: "success",
+      })
+      setFormData({ firstName: "", lastName: "", email: "", message: "" })
+      setIsFormValid(false)
+    } catch (error) {
+      console.error(error)
+      setMessageStatus({
+        message: "Échec de l'envoi du message.",
+        severity: "error",
+      })
+    } finally {
+      setIsSending(false)
+    }
+  }
+
+  /**
+   * Validate email format
+   * @param {string} email
+   * @returns {boolean} True if valid, false otherwise
+   */
+  const isEmailValid = (email) => {
+    if (!email) {
+      setEmailError("Email is required.")
+      return false
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      setEmailError("Invalid email format.")
+      return false
+    }
+    setEmailError("")
+    return true
+  }
+
+  /**
+   * Validate the entire form
+   */
+  const validForm = () => {
+    // Check if all fields are filled and email is valid
+    const isValid =
+      formData.firstName.trim() !== "" &&
+      formData.lastName.trim() !== "" &&
+      formData.message.trim() !== "" &&
+      isEmailValid(formData.email)
+
+    setIsFormValid(isValid)
+  }
+
+  // Handle modal close
+  const handleClose = () => {
+    setMessageStatus({ message: "", severity: "success" })
+    onClose()
+  }
+
+  if (!open) return null
+
+  return (
+    <section className="contact">
+      <Dialog
+        open={open}
+        onClose={onClose}
+        fullWidth
+        sx={{
+          "& .MuiDialog-paper": {
+            margin: "12px",
+            width: "100%",
+          },
+        }}
+      >
+        {/* Modal title */}
+        <DialogTitle>Contact</DialogTitle>
+        <DialogContent>
+          {/* FIRST NAME FIELD */}
+          <Stack spacing={3}>
+            <FormControl fullWidth>
+              <FormLabel
+                htmlFor="firstName"
+                required
+                className="contact__formlabel"
+              >
+                First name
+              </FormLabel>
+              <TextField
+                id="firstName"
+                name="firstName"
+                sx={{ marginLeft: "10px" }}
+                value={formData.firstName}
+                onChange={handleInputChange}
+                required
+              />
+            </FormControl>
+
+            {/* LAST NAME FIELD */}
+            <FormControl fullWidth>
+              <FormLabel
+                htmlFor="lastName"
+                required
+                className="contact__formlabel"
+              >
+                Last name
+              </FormLabel>
+              <TextField
+                id="lastName"
+                name="lastName"
+                sx={{ marginLeft: "10px" }}
+                value={formData.lastName}
+                onChange={handleInputChange}
+                required
+              />
+            </FormControl>
+
+            {/* EMAIL FIELD */}
+            <FormControl fullWidth>
+              <FormLabel htmlFor="email" required className="signup__formlabel">
+                Email
+              </FormLabel>
+              <TextField
+                sx={{ marginLeft: "10px" }}
+                className="contact__formlabel"
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                variant="outlined"
+                value={formData.email}
+                onChange={handleInputChange}
+                onBlur={handleInputBlur}
+                required
+                error={Boolean(emailError)}
+                helperText={emailError}
+              />
+            </FormControl>
+
+            {/* MESSAGE FIELD */}
+            <FormControl fullWidth>
+              <FormLabel
+                htmlFor="message"
+                required
+                className="contact__formlabel"
+              >
+                Message
+              </FormLabel>
+              <TextField
+                sx={{ marginLeft: "10px" }}
+                className="contact__formlabel"
+                id="message"
+                name="message"
+                type="text"
+                autoComplete="off"
+                variant="outlined"
+                value={formData.message}
+                onChange={handleInputChange}
+                onBlur={handleInputBlur}
+                required
+                multiline
+                minRows={4}
+                maxRows={8}
+              />
+            </FormControl>
+          </Stack>
+        </DialogContent>
+
+        {/* Buttons */}
+        <div className="contact__buttons">
+          <DialogActions>
+            <Button
+              className="btn_close"
+              sx={{ m: 1, minWidth: 120 }}
+              variant="contained"
+              onClick={handleClose}
+            >
+              Fermer
+            </Button>
+            <Button
+              className="btn_send"
+              sx={{ m: 1, minWidth: 120 }}
+              variant="contained"
+              onClick={handleSendEmail}
+              disabled={!isFormValid || isSending} // désactivé pendant le send
+            >
+              {isSending ? (
+                <CircularProgress size={18} sx={{ color: "white" }} />
+              ) : (
+                "Envoyer"
+              )}
+            </Button>
+          </DialogActions>
+        </div>
+
+        <div className="contact__status">
+          {/* Message status */}
+          <Alert
+            severity={messageStatus.severity}
+            sx={{
+              p: 0.5,
+              py: 0,
+              fontSize: "1rem",
+              alignItems: "center",
+              lineHeight: 1,
+              width: "90%",
+              visibility: messageStatus.message ? "visible" : "hidden",
+            }}
+          >
+            {messageStatus.message}
+          </Alert>
+        </div>
+      </Dialog>
+    </section>
+  )
+}
+
+export default ContactFormModal
