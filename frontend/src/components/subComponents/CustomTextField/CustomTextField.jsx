@@ -16,7 +16,7 @@ const CustomTextField = ({
   clearField = true,
   copy = false,
   multiline = false,
-  rows=4,
+  rows = 4,
 }) => {
   const [focused, setFocused] = useState(false)
 
@@ -46,6 +46,7 @@ const CustomTextField = ({
         </div>
         {multiline ? (
           <textarea
+            className="container__customtextfield--input--textarea"
             id={id}
             value={value}
             rows={rows}
@@ -56,6 +57,11 @@ const CustomTextField = ({
           />
         ) : (
           <input
+            className={
+              type === "number"
+                ? "container__customtextfield--input--number"
+                : "container__customtextfield--input--input"
+            }
             id={id}
             type={type}
             value={value}
@@ -65,7 +71,7 @@ const CustomTextField = ({
             onChange={onChange}
           />
         )}
-        {clearField && isFilled && !disabled && (
+        {clearField && isFilled && !disabled && type !== "number" && (
           <button
             type="button"
             className="container__customfield--clear-btn"

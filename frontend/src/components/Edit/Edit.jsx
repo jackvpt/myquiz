@@ -6,6 +6,7 @@ import CustomToggleButtons from "../subComponents/CustomToggleButtons/CustomTogg
 import { useState } from "react"
 import QuestionModel from "../../models/QuestionModel"
 import CustomToggleSwitch from "../subComponents/CustomToggleSwitch/CustomToggleSwitch"
+import AnswerModel from "../../models/AnswerModel"
 
 const Edit = () => {
   // Form state
@@ -22,17 +23,35 @@ const Edit = () => {
     question: "",
     order: 1,
     type: "multiple-choice",
-    answers:[]
+    answers: [],
   }
   const [form, setForm] = useState(formInitialState)
+
+  const [nbAnswers, setNbAnswers] = useState(4)
 
   const handleChange = (field) => (event) => {
     let value = event.target.value ?? ""
 
     setForm((prev) => {
       const model = new QuestionModel(prev)
-      model[field] = value
-      console.log(model)
+
+      const [fieldName, index] = field.split("|")
+
+      switch (fieldName) {
+        case "openAnswer":
+          model.answers = [new AnswerModel({ text: value, isCorrect: true })]
+          break
+        case "multipleAnswer":
+          model.answers[Number(index)] = new AnswerModel({
+            text: value,
+            isCorrect: false,
+          })
+          break
+        default:
+          model[field] = value
+          break
+      }
+
       return model
     })
   }
@@ -123,9 +142,47 @@ const Edit = () => {
       {form.type === "open-answer" && (
         <CustomTextField
           label="Answer"
-          value={form.expectedAnswer}
-          onChange={handleChange("expectedAnswer")}
+          value={form.openAnswer}
+          onChange={handleChange("openAnswer")}
         />
+      )}
+
+      {/* Multiple choice answers */}
+      {form.type === "multiple-choice" && (
+        <div className="multiple-choice__answers">
+          <h3>Answers</h3>
+          <CustomTextField
+            label="Number of answers"
+            type="number"
+            value={nbAnswers}
+            onChange={(event) => {
+              const value = Number.parseInt(event.target.value) || 0
+              setNbAnswers(value)
+            }}
+          />
+          {Array.from({ length: nbAnswers }, (_, index) => (
+            <div key={index} className="multiple-choice__answer">
+              <CustomTextField
+                label={`Answer ${index + 1}`}
+                value={form.answers[index]?.text || ""}
+                onChange={handleChange("multipleAnswer|" + index)}
+              />
+              {/* <CustomToggleSwitch
+                label="Correct"
+                toggleLabels={["Incorrect", "Correct"]}
+                checked={answer.isCorrect}
+                onChange={(event) => {
+                  const value = event.target.checked
+                  setForm((prev) => {
+                    const model = new QuestionModel(prev)
+                    model.answers[index].isCorrect = value
+                    return model
+                  })
+                }}
+              /> */}
+            </div>
+          ))}
+        </div>
       )}
     </section>
   )
