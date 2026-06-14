@@ -8,29 +8,32 @@ const QuestionSchema = new mongoose.Schema({
 
   ...CommonFields,
 
-  referenceId: {
-    type: String,
-    trim: true,
-  },
-
+  // The actual question text
   question: {
     type: String,
     required: true,
     trim: true,
   },
 
+  // Type of question (multiple-choice or open-ended)
   type: {
     type: String,
     enum: ["multiple-choice", "open"],
     default: "multiple-choice",
   },
 
+  // Array of possible answers for multiple-choice questions
   answers: {
     type: [AnswerSchema],
   },
 
-  explanation: String,
+  // Explanation or rationale for the correct answer
+  explanation: {
+    type: String,
+    trim: true,
+  },
 
+  // Illustration or image associated to the answer
   answerImageUrls: {
     type: [String],
     default: [],

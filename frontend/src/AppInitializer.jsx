@@ -15,7 +15,7 @@ const AppInitializer = ({ children }) => {
   // 👉 Auth is resolved when loading is finished
   const isAuthResolved = !isAuthLoading
 
-  const isAuthenticated = isAuthResolved && !!token
+  const isAuthenticated = !!token
 
   // Step 2: fetch questions ONLY when auth is resolved AND user exists
   const {
@@ -26,13 +26,19 @@ const AppInitializer = ({ children }) => {
     enabled: isAuthenticated, // Only fetch questions if user is authenticated
   })
 
-  // Global loading (only while auth is resolving OR questions loading)
-  if (!isAuthResolved || (isAuthenticated && questionsLoading)) {
+  if (!isAuthResolved) {
     return <Loader />
   }
 
-  // Global error (only if user is authenticated)
-  if (isAuthenticated && isError) {
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />
+  }
+
+  if (questionsLoading) {
+    return <Loader />
+  }
+
+  if (isError) {
     return <p>Error loading data: {error?.message}</p>
   }
 
