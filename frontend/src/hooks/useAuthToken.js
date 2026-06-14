@@ -21,63 +21,39 @@ export function useAuthToken() {
   const navigate = useNavigate()
 
   // Get token from browser storage (persistent or session-based)
-  const token =
-    localStorage.getItem("token") || sessionStorage.getItem("token")
+  const token = localStorage.getItem("token") || sessionStorage.getItem("token")
 
-  return useQuery({
-    // Unique query key (re-runs if token changes)
+  const query = useQuery({
     queryKey: ["authToken", token],
 
-    // Function that validates the token via API
     queryFn: async () => {
-      
       if (!token) {
-        throw new Error("No token found")
+        return null
       }
-      
+
       return validateToken(token)
     },
 
-    // Only run the query if a token exists
     enabled: !!token,
 
-    // Consider data fresh for 5 minutes
-    staleTime: 5 * 60 * 1000,
-
-    // Keep cache in memory for 10 minutes
-    cacheTime: 10 * 60 * 1000,
-
-    // Always revalidate when component mounts
-    refetchOnMount: "always",
-
-    // Disable automatic refetch on window focus or reconnect
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-
-    // Do not retry if the request fails (invalid token)
     retry: false,
 
-    // Called when token is valid
     onSuccess: (data) => {
-      console.log("✅ Token is valid")
-
-      // Store user data + token in Redux
       dispatch(setUser({ ...data, token }))
     },
 
-    // Called when token is invalid or request fails
-    onError: (err) => {
-      console.log("❌ Token is invalid:", err.message)
-
-      // Remove invalid token from storage
+    onError: () => {
       localStorage.removeItem("token")
       sessionStorage.removeItem("token")
 
-      // Clear user state in Redux
       dispatch(clearUser())
 
-      // Redirect to login page
       navigate("/login", { replace: true })
     },
   })
+
+  return {
+    ...query,
+    token: query.isSuccess ? token : null,
+  }
 }

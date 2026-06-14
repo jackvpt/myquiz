@@ -18,12 +18,8 @@ const AppInitializer = ({ children }) => {
   const isAuthenticated = !!token
 
   // Step 2: fetch questions ONLY when auth is resolved AND user exists
-  const {
-    isLoading: questionsLoading,
-    isError,
-    error,
-  } = useQuestions({
-    enabled: isAuthenticated, // Only fetch questions if user is authenticated
+  const { isLoading: questionsLoading } = useQuestions({
+    enabled: isAuthenticated,
   })
 
   if (!isAuthResolved) {
@@ -36,10 +32,6 @@ const AppInitializer = ({ children }) => {
 
   if (questionsLoading) {
     return <Loader />
-  }
-
-  if (isError) {
-    return <p>Error loading data: {error?.message}</p>
   }
 
   return children

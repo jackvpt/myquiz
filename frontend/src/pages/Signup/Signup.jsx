@@ -33,8 +33,8 @@ const Signup = () => {
   const initialState = {
     firstName: "",
     lastName: "",
-    email: "@heliholland.nl",
-    password: "Guesthouses.1",
+    email: "",
+    password: "",
   }
 
   // States

@@ -4,17 +4,7 @@ import "./Login.scss"
 // 🧩 MUI Core imports
 import {
   Alert,
-  Button,
-  Checkbox,
-  CircularProgress,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  IconButton,
-  InputAdornment,
-  OutlinedInput,
   Snackbar,
-  TextField,
 } from "@mui/material"
 import { Visibility, VisibilityOff } from "@mui/icons-material"
 
@@ -62,7 +52,7 @@ const Login = () => {
   const [toast, setToast] = useState({ message: "", severity: "success" }) // Toast message state
   const [toastOpen, setToastOpen] = useState(false) // Toast visibility
   const [loginError, setLoginError] = useState(false) // Login failure indicator
-  const [rememberMe, setRememberMe] = useState(false) // Remember me checkbox
+  const [rememberMe, setRememberMe] = useState(true) // Remember me checkbox
   const [contactFormModalOpen, setContactFormModalOpen] = useState(false)
   const [forgotPasswordModalOpen, setForgotPasswordModalOpen] = useState(false)
 
@@ -127,7 +117,7 @@ const Login = () => {
     mutationFn: login,
     onSuccess: (data) => {
       // Show success toast
-      showToast(`Connecté avec succès. Bienvenue ${data.firstName}!`)
+      showToast(`Login successful. Welcome ${data.firstName}!`)
 
       // Save token in sessionStorage or localStorage if "remember me" is checked
       sessionStorage.setItem("token", data.token)
@@ -154,7 +144,7 @@ const Login = () => {
     },
     onError: (error) => {
       console.error("Error while logging in:", error)
-      if (error.message === "UserID/Password incorrect") setLoginError(true)
+      if (error.message === "Incorrect UserID/Password") setLoginError(true)
     },
   })
 
@@ -246,7 +236,7 @@ const Login = () => {
           className="login__link"
           onClick={() => setForgotPasswordModalOpen(true)}
         >
-          Mot de passe oublié ?
+          Forgotten password ?
         </button>
       </div>
 
@@ -260,7 +250,7 @@ const Login = () => {
         {loginMutation.isPending ? (
           <span className="login__spinner"></span>
         ) : (
-          "Se connecter"
+          "Log in"
         )}
       </button>
 
@@ -271,25 +261,25 @@ const Login = () => {
           checked={rememberMe}
           onChange={(e) => setRememberMe(e.target.checked)}
         />
-        <span>Se souvenir de moi</span>
+        <span>Remember me</span>
       </label>
 
       {/** NO ACCOUNT LINK */}
       <div className="login__noaccount">
-        <p>Pas de compte ?</p>
+        <p>No account yet?</p>
         <button
           type="button"
           className="login__link"
-          onClick={() => setContactFormModalOpen(true)}
+          onClick={() => navigate("/signup")}
         >
-          Contactez l'administrateur
+          Create an account
         </button>
       </div>
 
       {/* LOGIN ERROR MESSAGE */}
       {loginError && (
         <Alert className="login__error" severity="error" sx={{ width: "100%" }}>
-          Email et/ou mot de passe incorrect
+          Incorrect email and/or password
         </Alert>
       )}
 
