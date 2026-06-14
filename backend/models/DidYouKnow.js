@@ -1,22 +1,17 @@
 const mongoose = require("mongoose")
 
-/** Create a mongoose Schema */
-const DidYouKnowSchema = new mongoose.Schema(
-  {
-    content: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+const ClassificationFields = require("./ClassificationFields")
+const CommonFields = require("./CommonFields")
 
-    imageUrl: [
-      {
-        type: String,
-        trim: true,
-      },
-    ],
+const DidYouKnowSchema = new mongoose.Schema({
+  ...ClassificationFields,
+
+  ...CommonFields,
+
+  content: {
+    type: String,
+    required: true,
   },
-  {
-    _id: false,
-  },
-)
+})
+
+module.exports = mongoose.model("DidYouKnow", DidYouKnowSchema)
