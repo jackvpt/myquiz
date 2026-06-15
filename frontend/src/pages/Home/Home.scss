@@ -4,9 +4,8 @@
 .container__home{
     display:flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     gap:1rem;
-    padding:0 1rem;
     width:100%;
 
     &-datagrid{

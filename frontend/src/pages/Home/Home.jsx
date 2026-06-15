@@ -1,4 +1,5 @@
 // CSS
+import SideMenu from "../../components/SideMenu/SideMenu"
 import Edit from "../../components/Edit/Edit"
 import ToolBar from "../../components/ToolBar/ToolBar"
 import "./Home.scss"
@@ -6,6 +7,7 @@ import "./Home.scss"
 const Home = () => {
   return (
     <section className="container__home">
+      <SideMenu />
       <Edit />
       {/* <div className="container__home-datagrid">
         <ToolBar />

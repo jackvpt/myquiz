@@ -1,0 +1,30 @@
+@use "../../styles/utils/variables" as *;
+@use "../../styles/utils/mixins" as *;
+
+.container__sidemenu{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    &--nav{
+        display:flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding:0;
+
+        &-btn {
+            width:48px;
+            height:48px;
+            border:none;
+            cursor:pointer;
+            color:$secondary-color-1;
+
+            &:hover {
+                color:$primary-color-1;
+                background-color:$secondary-color-1;
+            }
+        }
+    }
+}

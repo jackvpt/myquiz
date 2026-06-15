@@ -5,8 +5,8 @@
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-
-  padding: 2rem 1rem;
+  padding: 0.5rem;
+  background-color: $secondary-color-1;
 
   &--icon {
     justify-self: start;
@@ -15,5 +15,6 @@
   }
   h1 {
     justify-self: center;
+    color: $text-color-2;
   }
 }

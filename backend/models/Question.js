@@ -39,3 +39,5 @@ const QuestionSchema = new mongoose.Schema({
     default: [],
   },
 })
+
+module.exports = mongoose.model("Question", QuestionSchema)/** 'Question' is the collection name which becomes 'Questions' */

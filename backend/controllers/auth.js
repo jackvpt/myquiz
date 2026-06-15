@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const createLog = require("../utils/Logger")
 const { isErrorPassword } = require("../utils/authTools")
+const { decodeExp } = require("../utils/dateTools")
 
 /** SIGNUP new User + Auth */
 exports.signup = async (req, res) => {
