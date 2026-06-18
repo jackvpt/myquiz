@@ -1,5 +1,5 @@
 // CSS
-import "./Edit.scss"
+import "./EditQuiz.scss"
 
 import CustomTextField from "../subComponents/CustomTextField/CustomTextField"
 import CustomToggleButtons from "../subComponents/CustomToggleButtons/CustomToggleButtons"
@@ -8,7 +8,7 @@ import QuestionModel from "../../models/QuestionModel"
 import CustomToggleSwitch from "../subComponents/CustomToggleSwitch/CustomToggleSwitch"
 import AnswerModel from "../../models/AnswerModel"
 
-const Edit = () => {
+const EditQuiz = () => {
   // Form state
   const formInitialState = {
     theme: "",
@@ -57,7 +57,7 @@ const Edit = () => {
   }
 
   return (
-    <section className="container__edit">
+    <section className="container__editquiz">
       <CustomTextField
         label="Theme"
         value={form.theme}
@@ -188,4 +188,4 @@ const Edit = () => {
   )
 }
 
-export default Edit
+export default EditQuiz

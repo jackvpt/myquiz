@@ -1,62 +1,42 @@
-import { Routes, Route } from "react-router-dom"
-import { Navigate } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
+
+import Layout from "../Layout/Layout"
+import Quiz from "../pages/Quiz/Quiz"
+import DidYouKnow from "../pages/DidYouKnow/DidYouKnow"
 
 import Home from "../pages/Home/Home"
 import Error from "../pages/Error/Error"
-import Header from "../components/Header/Header"
 import Login from "../pages/Login/Login"
 import Account from "../pages/Account/Account"
 import Signup from "../pages/Signup/Signup"
 
-/**
- * Application router component using React Router v6.
- *
- * @category Router
- * @component
- * @returns {JSX.Element} The main Router component for the application.
- */
 const Router = () => {
-  // Access the authentication token from the local storage or session storage
   const token = localStorage.getItem("token") || sessionStorage.getItem("token")
 
   return (
-    <div className="app">
-      {/* Header displayed on all pages */}
-      <Header />
-      {/* SEO compliant main landmark */}
-      <main role="main">
-        <Routes>
-          {/* Routes for authenticated users */}
-          {token ? (
-            <>
-              {/* Routes for authenticated users */}
-              <Route path="/" element={<Home />} />
-              <Route path="/account" element={<Account />} />
+    <Routes>
+      {!token ? (
+        <>
+          <Route path="/login" element={<Login />} />
 
-              {/* Allow admin/user to signup or login if needed */}
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/login" element={<Login />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </>
+      ) : (
+        <Route element={<Layout />}>
+          <Route path="/" element={<DidYouKnow />} />
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/didyouknow" element={<DidYouKnow />} />
 
-              {/* Catch-all route for unknown paths */}
-              <Route path="*" element={<Error />} />
-            </>
-          ) : (
-            <>
-              {/* Routes for unauthenticated users */}
+          <Route path="/account" element={<Account />} />
 
-              {/* Login page route */}
-              <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
 
-              {/* Redirect any unknown route to login */}
-              <Route path="*" element={<Navigate to="/login" replace />} />
-            </>
-          )}
-        </Routes>
-      </main>
+          <Route path="/login" element={<Login />} />
 
-      {/* Footer displayed on all pages */}
-      {/* <Footer /> */}
-    </div>
+          <Route path="*" element={<Error />} />
+        </Route>
+      )}
+    </Routes>
   )
 }
 

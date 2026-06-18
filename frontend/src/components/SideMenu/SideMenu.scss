@@ -1,30 +1,40 @@
 @use "../../styles/utils/variables" as *;
 @use "../../styles/utils/mixins" as *;
 
-.container__sidemenu{
-    display:flex;
+.container__sidemenu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  flex-shrink: 0;
+
+  &--nav {
+    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    padding: 0;
+    background-color: $primary-color-2;
 
-    &--nav{
-        display:flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        padding:0;
+    &-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 48px;
+      height: 48px;
+      border: none;
+      cursor: pointer;
+      color: $secondary-color-1;
 
-        &-btn {
-            width:48px;
-            height:48px;
-            border:none;
-            cursor:pointer;
-            color:$secondary-color-1;
+      &:hover {
+        color: $primary-color-1;
+        background-color: $secondary-color-2;
+      }
 
-            &:hover {
-                color:$primary-color-1;
-                background-color:$secondary-color-1;
-            }
-        }
+      &.active {
+        color: $primary-color-1;
+        background-color: $secondary-color-1;
+      }
     }
+  }
 }

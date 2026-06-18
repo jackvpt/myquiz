@@ -18,15 +18,13 @@ body,
 }
 
 .app {
-  height: 100dvh;
+  height:100%;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  overflow-y: hidden;
 }
 
-main {
+.main {
   flex: 1;
-  min-height: 0;
-  display: flex;
-  overflow: hidden;
+  overflow-y: auto;
 }
