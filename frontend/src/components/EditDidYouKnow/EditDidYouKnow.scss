@@ -1,0 +1,42 @@
+@use "../../styles/utils/variables" as *;
+@use "../../styles/utils/mixins" as *;
+
+.container__edit-didyouknow {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &--fileselect {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+
+    &--data {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 0.5rem;
+      width: $textFieldWidth;
+
+      &--button {
+        all: unset;
+        cursor: pointer;
+        color: $secondary-color-1;
+
+        &:hover {
+          color: $secondary-color-2;
+        }
+      }
+
+      &--filename {
+        font-size: 0.8rem;
+        color: $primary-color-4;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+}

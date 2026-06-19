@@ -7,6 +7,7 @@
   justify-content: flex-start;
   align-items: center;
   flex-shrink: 0;
+  background-color: $primary-color-2;
 
   &--nav {
     display: flex;
@@ -14,7 +15,6 @@
     justify-content: flex-start;
     align-items: center;
     padding: 0;
-    background-color: $primary-color-2;
 
     &-btn {
       display: flex;
@@ -29,11 +29,13 @@
       &:hover {
         color: $primary-color-1;
         background-color: $secondary-color-2;
+        border-left: 3px solid $secondary-color-1;
       }
 
       &.active {
         color: $primary-color-1;
         background-color: $secondary-color-1;
+        border-left: 3px solid $secondary-color-2;
       }
     }
   }

@@ -20,7 +20,9 @@ const CustomTextField = ({
 }) => {
   const [focused, setFocused] = useState(false)
 
-  const isFilled = value && value.length > 0
+  const isFilled =
+    value &&
+    (typeof value === "string" ? value.length > 0 : value instanceof File)
 
   return (
     <div
@@ -76,6 +78,7 @@ const CustomTextField = ({
             type="button"
             className="container__customfield--clear-btn"
             onClick={() => onChange({ target: { value: "" } })}
+            tabIndex={-1}
           >
             <FontAwesomeIcon icon={faCircleXmark} />
           </button>
@@ -92,7 +95,7 @@ CustomTextField.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  type: PropTypes.string,
+  type: PropTypes.string, // 'input', 'number'
   error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   helperText: PropTypes.string,
   disabled: PropTypes.bool,

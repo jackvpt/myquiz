@@ -8,7 +8,7 @@ const DidYouKnowSchema = new mongoose.Schema({
 
   ...CommonFields,
 
-  content: {
+  text: {
     type: String,
     required: true,
   },

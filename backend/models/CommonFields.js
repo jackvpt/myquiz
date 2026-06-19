@@ -35,4 +35,10 @@ module.exports = {
     type: [String],
     default: [],
   },
+
+  // Illustration or image associated to the answer
+  answerImageUrls: {
+    type: [String],
+    default: [],
+  },
 }

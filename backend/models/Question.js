@@ -32,12 +32,6 @@ const QuestionSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-
-  // Illustration or image associated to the answer
-  answerImageUrls: {
-    type: [String],
-    default: [],
-  },
 })
 
 module.exports = mongoose.model("Question", QuestionSchema)/** 'Question' is the collection name which becomes 'Questions' */

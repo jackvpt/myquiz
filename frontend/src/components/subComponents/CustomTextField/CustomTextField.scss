@@ -16,8 +16,8 @@
     align-items: center;
 
     &::selection {
-      background-color: $secondary-color-2;
-      color: $text-color-1;
+      background-color: $secondary-color-1;
+      color: $text-color-2;
     }
 
     &--copy-btn {
@@ -47,14 +47,20 @@
 
     &--textarea,
     &--input,
+    &--file,
     &--number {
-      @include normal-border;
+      width: $textFieldWidth;
       resize: none;
       outline: none;
       transition: 0.2s;
+    }
+
+    &--textarea,
+    &--input,
+    &--number {
+      @include normal-border;
       background-color: $primary-color-2;
-      color: $text-color-2;
-      width: $textFieldWidth;
+      color: $text-color-1;
     }
 
     &--textarea,
@@ -71,7 +77,7 @@
 
 /* focus input */
 .container__customtextfield.focused input {
-  border-color: $secondary-color-1;
+  border-color: $secondary-color-2;
 }
 
 /* error */

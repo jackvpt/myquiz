@@ -27,8 +27,11 @@ export default class DidYouKnowModel {
     // Tags
     this.tags = data.tags || []
 
-    // Images
-    this.questionImageUrls = data.questionImageUrls || []
+    // Content illustration
+    this.contentIllustrationUrl = data.contentIllustrationUrl || ""
+
+    // Answer images
+    this.answerImageUrls = data.answerImageUrls || []
 
     // Stats
     this.stats = {
@@ -73,7 +76,7 @@ export default class DidYouKnowModel {
 
       tags: this.tags,
 
-      questionImageUrls: this.questionImageUrls,
+      contentIllustrationUrl: this.contentIllustrationUrl,
 
       answerImageUrls: this.answerImageUrls,
     }
