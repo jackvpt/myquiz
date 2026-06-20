@@ -20,7 +20,7 @@ import { useMutation } from "@tanstack/react-query"
 import { login } from "../../api/auth.api"
 
 // 👉 Internal components
-import CustomButton from "../../components/Buttons/CustomButton"
+import CustomButton from "../../components/subComponents/Buttons/CustomButton/CustomButton"
 import ContactFormModal from "../../components/ContactFormModal/ContactFormModal"
 import ForgotPasswordModal from "../../components/ForgotPasswordModal/ForgotPasswordModal"
 

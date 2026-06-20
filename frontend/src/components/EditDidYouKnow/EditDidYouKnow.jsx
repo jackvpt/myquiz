@@ -1,13 +1,16 @@
 // CSS
 import "./EditDidYouKnow.scss"
+
+// React
 import { useState } from "react"
 
+// Models
 import DidYouKnowModel from "../../models/DidYouKnowModel"
-import CustomTextField from "../subComponents/CustomTextField/CustomTextField"
 
-// FontAwesome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faFileImage } from "@fortawesome/free-solid-svg-icons"
+// Components
+import CustomTextField from "../subComponents/CustomTextField/CustomTextField"
+import CustomFileSelect from "../subComponents/CustomFileSelect/CustomFileSelect"
+import CustomButton from "../subComponents/Buttons/CustomButton/CustomButton"
 
 const EditDidYouKnow = () => {
   // Form state
@@ -20,7 +23,9 @@ const EditDidYouKnow = () => {
     topic: "",
     referenceId: "",
     documentationRef: "",
+    contentIllustrationUrl: null,
     text: "",
+    answerIllustrationUrls: [],
     order: 1,
   }
 
@@ -28,7 +33,11 @@ const EditDidYouKnow = () => {
 
   const handleChange = (field) => (event) => {
     const value =
-      event.target.type === "file" ? event.target.files[0] : event.target.value
+      event.target.type === "file"
+        ? event.target.multiple
+          ? Array.from(event.target.files)
+          : event.target.files[0]
+        : event.target.value
 
     setForm((prev) => {
       const model = new DidYouKnowModel(prev)
@@ -83,37 +92,12 @@ const EditDidYouKnow = () => {
       />
 
       {/* Illustration */}
-      <div className="container__edit-didyouknow--fileselect">
-        <div className="container__edit-didyouknow--fileselect--label">
-          Illustration
-        </div>
-        <div className="container__edit-didyouknow--fileselect--data">
-          <button
-            className="container__edit-didyouknow--fileselect--data--button"
-            type="button"
-            onClick={() =>
-              document.getElementById("contentIllustrationUrl").click()
-            }
-          >
-            <FontAwesomeIcon icon={faFileImage} size="xl" />
-          </button>
-          <div className="container__edit-didyouknow--fileselect--data--filename">
-            {form.contentIllustrationUrl instanceof File
-              ? form.contentIllustrationUrl.name
-              : form.contentIllustrationUrl
-                ? form.contentIllustrationUrl.split("/").pop()
-                : "No file selected"}
-          </div>
-        </div>
-        <input
-          id="contentIllustrationUrl"
-          type="file"
-          aria-label="Choose content illustration image"
-          accept=".jpg,.jpeg,.png"
-          onChange={handleChange("contentIllustrationUrl")}
-          hidden
-        />
-      </div>
+      <CustomFileSelect
+        label="Illustration"
+        value={form.contentIllustrationUrl}
+        onChange={handleChange("contentIllustrationUrl")}
+        multiple={false}
+      />
 
       {/* Text */}
       <CustomTextField
@@ -123,6 +107,19 @@ const EditDidYouKnow = () => {
         multiline
         rows={4}
       />
+
+      {/* Images illustrating answers */}
+      <CustomFileSelect
+        label="Images"
+        value={form.answerIllustrationUrls}
+        onChange={handleChange("answerIllustrationUrls")}
+        multiple={true}
+      />
+
+      {/* Buttons */}
+      <div className="container__edit-didyouknow--buttons">
+        <CustomButton action="create" />
+      </div>
     </section>
   )
 }

@@ -2,10 +2,10 @@
 import "./EditQuiz.scss"
 
 import CustomTextField from "../subComponents/CustomTextField/CustomTextField"
-import CustomToggleButtons from "../subComponents/CustomToggleButtons/CustomToggleButtons"
+import CustomToggleButtons from "../subComponents/Buttons/CustomToggleButtons/CustomToggleButtons"
 import { useState } from "react"
 import QuestionModel from "../../models/QuestionModel"
-import CustomToggleSwitch from "../subComponents/CustomToggleSwitch/CustomToggleSwitch"
+import CustomToggleSwitch from "../subComponents/Buttons/CustomToggleSwitch/CustomToggleSwitch"
 import AnswerModel from "../../models/AnswerModel"
 
 const EditQuiz = () => {
