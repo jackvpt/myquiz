@@ -13,6 +13,7 @@ import CustomFileSelect from "../subComponents/CustomFileSelect/CustomFileSelect
 import CustomButton from "../subComponents/Buttons/CustomButton/CustomButton"
 import { useCreateDidYouKnow } from "../../hooks/useDidYouKnow"
 import CustomButtonsDifficulty from "../subComponents/Buttons/CustomButtonsDifficulty/CustomButtonsDifficulty"
+import DisplayDidYouKnow from "../DisplayDidYouKnow/DisplayDidYouKnow"
 
 const EditDidYouKnow = () => {
   // Form state
@@ -70,8 +71,6 @@ const EditDidYouKnow = () => {
       referenceId: "H160_TECH_AFCS_001",
       documentationRef:
         "FLM VOL 2 > DESC > AFCS > OPS MODES > ADV UPPER MODES > GO AROUND",
-      contentIllustrationFile:
-        "C:\\Users\\jacqu\\Dropbox\\Documentation aéro\\H160\\Ground course\\Images\\Quiz\\label_goaround.png",
       text: "When GA is coupled, green mode labels are displayed for 15s (from cruise flight) or 30 s (from hover)",
       difficulty: "medium",
     }
@@ -89,84 +88,89 @@ const EditDidYouKnow = () => {
   } = useCreateDidYouKnow()
   return (
     <section className="container__edit-didyouknow">
-      <button onClick={() => createMock()}>Create Mock</button>
-      <CustomTextField
-        label="Theme"
-        value={form.theme}
-        onChange={handleChange("theme")}
-      />
-      <CustomTextField
-        label="Domaine"
-        value={form.domain}
-        onChange={handleChange("domain")}
-      />
-      <CustomTextField
-        label="Section"
-        value={form.section}
-        onChange={handleChange("section")}
-      />
-      <CustomTextField
-        label="Family"
-        value={form.family}
-        onChange={handleChange("family")}
-      />
-      <CustomTextField
-        label="Category"
-        value={form.category}
-        onChange={handleChange("category")}
-      />
-      <CustomTextField
-        label="Topic"
-        value={form.topic}
-        onChange={handleChange("topic")}
-      />
-      <CustomTextField
-        label="Reference"
-        value={form.referenceId}
-        onChange={handleChange("referenceId")}
-      />
+      <div className="container__edit-didyouknow--form">
+        <button onClick={() => createMock()}>Create Mock</button>
+        <CustomTextField
+          label="Theme"
+          value={form.theme}
+          onChange={handleChange("theme")}
+        />
+        <CustomTextField
+          label="Domaine"
+          value={form.domain}
+          onChange={handleChange("domain")}
+        />
+        <CustomTextField
+          label="Section"
+          value={form.section}
+          onChange={handleChange("section")}
+        />
+        <CustomTextField
+          label="Family"
+          value={form.family}
+          onChange={handleChange("family")}
+        />
+        <CustomTextField
+          label="Category"
+          value={form.category}
+          onChange={handleChange("category")}
+        />
+        <CustomTextField
+          label="Topic"
+          value={form.topic}
+          onChange={handleChange("topic")}
+        />
+        <CustomTextField
+          label="Reference"
+          value={form.referenceId}
+          onChange={handleChange("referenceId")}
+        />
 
-      {/* Documentation reference */}
-      <CustomTextField
-        label="Documentation"
-        value={form.documentationRef}
-        onChange={handleChange("documentationRef")}
-      />
+        {/* Documentation reference */}
+        <CustomTextField
+          label="Documentation"
+          value={form.documentationRef}
+          onChange={handleChange("documentationRef")}
+        />
 
-      {/* Illustration */}
-      <CustomFileSelect
-        label="Illustration"
-        value={form.contentIllustrationFile}
-        onChange={handleChange("contentIllustrationFile")}
-        multiple={false}
-      />
+        {/* Illustration */}
+        <CustomFileSelect
+          label="Illustration"
+          value={form.contentIllustrationFile}
+          onChange={handleChange("contentIllustrationFile")}
+          multiple={false}
+        />
 
-      {/* Text */}
-      <CustomTextField
-        label="Text"
-        value={form.text}
-        onChange={handleChange("text")}
-        multiline
-        rows={4}
-      />
+        {/* Text */}
+        <CustomTextField
+          label="Text"
+          value={form.text}
+          onChange={handleChange("text")}
+          multiline
+          rows={4}
+        />
 
-      {/* Difficulty */}
-      <CustomButtonsDifficulty
-        value={form.difficulty}
-        onChange={handleChange("difficulty")}
-      />
+        {/* Difficulty */}
+        <CustomButtonsDifficulty
+          value={form.difficulty}
+          onChange={handleChange("difficulty")}
+        />
 
-      {/* Images illustrating answers */}
-      <CustomFileSelect
-        label="Images"
-        value={form.answerImageFiles}
-        onChange={handleChange("answerImageFiles")}
-        multiple={true}
-      />
+        {/* Images illustrating answers */}
+        <CustomFileSelect
+          label="Images"
+          value={form.answerImageFiles}
+          onChange={handleChange("answerImageFiles")}
+          multiple={true}
+        />
 
-      {/* Buttons */}
-      <div className="container__edit-didyouknow--buttons">
-        <CustomButton action="create" onClick={handleCreate} />
+        {/* Buttons */}
+        <div className="container__edit-didyouknow--buttons">
+          <CustomButton action="create" onClick={handleCreate} />
+        </div>
+      </div>
+      <div className="container__edit-didyouknow--preview">
+        <DisplayDidYouKnow didYouKnow={form} />
       </div>
     </section>
   )

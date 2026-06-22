@@ -1,0 +1,34 @@
+@use "../../styles/utils/variables" as *;
+@use "../../styles/utils/mixins" as *;
+
+.container__displaydidyouknow {
+  position: relative;
+  padding: 1rem;
+  border-radius: 0.5rem;
+
+  &--title {
+    position: absolute;
+    top: -1rem;
+    left: -1rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: max-content;
+    background-color: $secondary-color-1;
+    color: $text-color-2;
+    border: 1px solid $secondary-color-1;
+    border-radius: 5px;
+    padding: 0.75rem;
+  }
+
+  &--text {
+    padding: 1rem;
+    background-color: $primary-color-2;
+    color: $text-color-1;
+    border: 1px solid $text-color-1;
+    border-radius: 5px;
+  }
+}
