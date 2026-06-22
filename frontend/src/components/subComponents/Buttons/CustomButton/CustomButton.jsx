@@ -8,7 +8,6 @@ import {
 
 import "./CustomButton.scss"
 
-
 const actionConfig = {
   create: {
     label: "Add",
@@ -32,7 +31,6 @@ const actionConfig = {
   },
 }
 
-
 const CustomButton = ({
   action = "create",
   loading = false,
@@ -40,27 +38,22 @@ const CustomButton = ({
   children,
   ...props
 }) => {
-
   const config = actionConfig[action]
-
 
   return (
     <button
       className={`container__custom-button ${action}`}
+      onClick={props.onClick}
       disabled={disabled || loading}
       {...props}
     >
-
       {loading ? (
         <span className="container__custom-button--loader" />
       ) : (
         <FontAwesomeIcon icon={config.icon} />
       )}
 
-      <span>
-        {children || config.label}
-      </span>
-
+      <span>{children || config.label}</span>
     </button>
   )
 }

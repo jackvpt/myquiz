@@ -25,20 +25,26 @@ module.exports = {
   },
 
   // Illustration or image required by the question content
-  contentIllustration: {
+  contentIllustrationUrl: {
     type: String,
     trim: true,
-  },
-
-  // Illustration or image associated to the question
-  questionImageUrls: {
-    type: [String],
-    default: [],
   },
 
   // Illustration or image associated to the answer
   answerImageUrls: {
     type: [String],
     default: [],
+  },
+
+  // Creation timestamp
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+
+  // Last update timestamp
+  updatedAt: {
+    type: Date,
+    default: Date.now,
   },
 }

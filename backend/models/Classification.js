@@ -21,11 +21,6 @@ const ClassificationSchema = new mongoose.Schema(
       enum: ["theme", "domain", "section", "family", "category", "topic"],
       required: true,
     },
-
-    order: {
-      type: Number,
-      default: 1,
-    },
   },
   { _id: false },
 )

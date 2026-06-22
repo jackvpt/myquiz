@@ -7,17 +7,32 @@ import { faFileImage } from "@fortawesome/free-solid-svg-icons"
 
 const CustomFileSelect = ({ label, value, onChange, multiple = false }) => {
   const displayValue = () => {
+    if (!value) return "No file selected"
+
     if (multiple && Array.isArray(value)) {
-      return value.length
-        ? value.map((file) => file.name).join(", ")
-        : "No file selected"
+      if (!value.length) return "No file selected"
+
+      return value
+        .map((file) => {
+          if (!file) return null
+          if (file instanceof File) return file.name
+          if (typeof file === "string") return file.split("/").pop()
+          return null
+        })
+        .filter(Boolean)
+        .join(", ")
     }
 
     if (value instanceof File) {
       return value.name
     }
 
-    return value ? value.split("/").pop() : "No file selected"
+    if (typeof value === "string") {
+      return value.split("/").pop()
+    }
+
+
+    return "No file selected"
   }
 
   return (

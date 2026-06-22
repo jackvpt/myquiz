@@ -8,7 +8,7 @@ const rateLimiter = require("./middleware/rate-limiter")
 
 const authRoutes = require("./routes/auth")
 const questionsRoutes = require("./routes/questions")
-
+const didyouknowsRoutes = require("./routes/didyouknows")
 
 /** Create an express application */
 const app = express()
@@ -18,7 +18,7 @@ const connectDB = async () => {
   try {
     await mongoose.connect(process.env.DB_LINK)
     console.log("MongoDB connection success !")
-     console.log("Connected to DB:", mongoose.connection.name)
+    console.log("Connected to DB:", mongoose.connection.name)
   } catch (error) {
     console.log("MongoDB connection failed !")
   }
@@ -32,19 +32,33 @@ app.use(express.json())
 /** Protect application by setting various HTTP headers (XSS, Clickjacking,...) but allowing images from 'same-site' */
 app.use(helmet({ crossOriginResourcePolicy: { policy: "same-site" } }))
 
+// Serve uploaded files as static resources
+app.use("/uploads", express.static("uploads"))
+
 /** Middleware for CORS headers */
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_URL) /** Origins authorized */
-  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization") /** Some headers authorized */
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS") /** Some methods authorized */
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    process.env.CLIENT_URL,
+  ) /** Origins authorized */
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization",
+  ) /** Some headers authorized */
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+  ) /** Some methods authorized */
   next() /** Go to next middleware */
 })
-
 
 /** Auth routes */
 app.use("/auth", rateLimiter[1], authRoutes)
 
 /** Questions routes */
 app.use("/questions", rateLimiter[1], questionsRoutes)
+
+/** Did You Know routes */
+app.use("/didyouknows", rateLimiter[1], didyouknowsRoutes)
 
 module.exports = app

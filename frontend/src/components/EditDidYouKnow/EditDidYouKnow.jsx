@@ -11,6 +11,8 @@ import DidYouKnowModel from "../../models/DidYouKnowModel"
 import CustomTextField from "../subComponents/CustomTextField/CustomTextField"
 import CustomFileSelect from "../subComponents/CustomFileSelect/CustomFileSelect"
 import CustomButton from "../subComponents/Buttons/CustomButton/CustomButton"
+import { useCreateDidYouKnow } from "../../hooks/useDidYouKnow"
+import CustomButtonsDifficulty from "../subComponents/Buttons/CustomButtonsDifficulty/CustomButtonsDifficulty"
 
 const EditDidYouKnow = () => {
   // Form state
@@ -23,9 +25,10 @@ const EditDidYouKnow = () => {
     topic: "",
     referenceId: "",
     documentationRef: "",
-    contentIllustrationUrl: null,
+    contentIllustrationFile: null,
     text: "",
-    answerIllustrationUrls: [],
+    difficulty: "easy",
+    answerImageFiles: [],
     order: 1,
   }
 
@@ -39,15 +42,54 @@ const EditDidYouKnow = () => {
           : event.target.files[0]
         : event.target.value
 
-    setForm((prev) => {
-      const model = new DidYouKnowModel(prev)
-
-      model[field] = value
-      return model
-    })
+    setForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }))
   }
+
+  const handleCreate = () => {
+    console.log("Creating DidYouKnow:", form)
+    const didyouknow = new DidYouKnowModel(form)
+    console.log("DidYouKnowModel instance:", didyouknow)
+    if (!didyouknow.isValid()) {
+      console.log("Data not valid")
+      return
+    }
+    createDidYouKnow(didyouknow)
+  }
+
+  const createMock = () => {
+    const mockData = {
+      theme: "Aviation",
+      domain: "Aircraft",
+      section: "H160",
+      family: "Technical knowledge",
+      category: "AFCS",
+      topic: "",
+      referenceId: "H160_TECH_AFCS_001",
+      documentationRef:
+        "FLM VOL 2 > DESC > AFCS > OPS MODES > ADV UPPER MODES > GO AROUND",
+      contentIllustrationFile:
+        "C:\\Users\\jacqu\\Dropbox\\Documentation aéro\\H160\\Ground course\\Images\\Quiz\\label_goaround.png",
+      text: "When GA is coupled, green mode labels are displayed for 15s (from cruise flight) or 30 s (from hover)",
+      difficulty: "medium",
+    }
+
+    setForm(mockData)
+  }
+
+  // Mutations
+  const {
+    mutate: createDidYouKnow,
+    isPending: isCreating,
+    isSuccess: isCreateSuccess,
+    isError: isCreateError,
+    reset: resetCreate,
+  } = useCreateDidYouKnow()
   return (
     <section className="container__edit-didyouknow">
+      <button onClick={() => createMock()}>Create Mock</button>
       <CustomTextField
         label="Theme"
         value={form.theme}
@@ -94,8 +136,8 @@ const EditDidYouKnow = () => {
       {/* Illustration */}
       <CustomFileSelect
         label="Illustration"
-        value={form.contentIllustrationUrl}
-        onChange={handleChange("contentIllustrationUrl")}
+        value={form.contentIllustrationFile}
+        onChange={handleChange("contentIllustrationFile")}
         multiple={false}
       />
 
@@ -108,17 +150,23 @@ const EditDidYouKnow = () => {
         rows={4}
       />
 
+      {/* Difficulty */}
+      <CustomButtonsDifficulty
+        value={form.difficulty}
+        onChange={handleChange("difficulty")}
+      />
+
       {/* Images illustrating answers */}
       <CustomFileSelect
         label="Images"
-        value={form.answerIllustrationUrls}
-        onChange={handleChange("answerIllustrationUrls")}
+        value={form.answerImageFiles}
+        onChange={handleChange("answerImageFiles")}
         multiple={true}
       />
 
       {/* Buttons */}
       <div className="container__edit-didyouknow--buttons">
-        <CustomButton action="create" />
+        <CustomButton action="create" onClick={handleCreate} />
       </div>
     </section>
   )

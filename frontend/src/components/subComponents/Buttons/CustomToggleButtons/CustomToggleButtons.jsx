@@ -9,7 +9,9 @@ const CustomToggleButtons = ({ options, value, onChange }) => {
         <button
           key={option.value}
           type="button"
-          className={value === option.value ? "active" : ""}
+          className={`${
+            value === option.value ? `active active-${option.value}` : ""
+          }`}
           onClick={() =>
             onChange({
               target: {

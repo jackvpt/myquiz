@@ -15,6 +15,12 @@ const QuestionSchema = new mongoose.Schema({
     trim: true,
   },
 
+  // Illustration or image associated to the question
+  questionImageUrls: {
+    type: [String],
+    default: [],
+  },
+
   // Type of question (multiple-choice or open-ended)
   type: {
     type: String,
@@ -34,4 +40,7 @@ const QuestionSchema = new mongoose.Schema({
   },
 })
 
-module.exports = mongoose.model("Question", QuestionSchema)/** 'Question' is the collection name which becomes 'Questions' */
+module.exports = mongoose.model(
+  "Question",
+  QuestionSchema,
+) /** 'Question' is the collection name which becomes 'Questions' */
