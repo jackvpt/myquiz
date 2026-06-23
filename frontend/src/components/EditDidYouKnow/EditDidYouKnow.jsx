@@ -27,9 +27,11 @@ const EditDidYouKnow = () => {
     referenceId: "",
     documentationRef: "",
     contentIllustrationFile: null,
+    contentIllustrationPreview: null,
     text: "",
     difficulty: "easy",
     answerImageFiles: [],
+    answerImagePreviews: [],
     order: 1,
   }
 
@@ -46,6 +48,11 @@ const EditDidYouKnow = () => {
     setForm((prev) => ({
       ...prev,
       [field]: value,
+      ...(field === "contentIllustrationFile" && value
+        ? {
+            contentIllustrationPreview: URL.createObjectURL(value),
+          }
+        : {}),
     }))
   }
 
