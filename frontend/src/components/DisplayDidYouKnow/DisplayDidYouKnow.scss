@@ -9,8 +9,8 @@
 
   &--title {
     position: absolute;
-    top: -1rem;
-    left: -1rem;
+    top: -0.25rem;
+    left: -0.25rem;
 
     display: flex;
     align-items: center;
@@ -19,7 +19,7 @@
     background-color: $secondary-color-1;
     color: $text-color-2;
 
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 0.75rem;
     border-radius: 8px;
     border: 1px solid $secondary-color-1;
 
@@ -29,6 +29,10 @@
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
 
     z-index: 2;
+
+    h2 {
+      font-size: 1rem;
+    }
   }
 
   &--content {
@@ -36,28 +40,85 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 1rem;
+    gap: 0.5rem;
 
-    padding: 1.5rem 1rem 1rem;
+    padding: 0.5rem 1rem 1rem;
     background-color: $primary-color-2;
     color: $text-color-1;
     border: 1px solid $text-color-1;
-    border-radius: 5px;
-  }
+    border-radius: 0.5rem;
 
-  &--illustration {
-    height: 100%;
-    max-height: 20px;
-    object-fit: contain;
-  }
+    &--difficulty {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      align-self: flex-end;
 
-  &--reference{
-    display:flex;
-    flex-direction:row;
-    justify-content:flex-start;
-    align-items:center;
-    font-size:0.8rem;
-    gap:0.5rem;
-    color:$primary-color-5;
+      .difficulty-light {
+        width: 14px;
+        height: 14px;
+        border: 1px solid transparent;
+        border-radius: 50%;
+
+        opacity: 0.25; // Off
+
+        transition: all 0.3s ease;
+
+        &.easy {
+          background-color: #388e3c;
+        }
+
+        &.medium {
+          background-color: #fbc02d;
+        }
+
+        &.hard {
+          background-color: #d32f2f;
+        }
+
+        &.active {
+          opacity: 1;
+          border: 1px solid black;
+        }
+      }
+    }
+
+    &--illustration {
+      height: 100%;
+      max-height: 16px;
+      object-fit: contain;
+    }
+
+    &--text {
+      margin: 1rem 0;
+    }
+
+    &--answer-images {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 0.5rem;
+
+      &--image {
+        flex: 1;
+        max-height: 250px;
+        aspect-ratio: 1 / 1;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 0.25rem;
+        border: 1px solid $text-color-1;
+      }
+    }
+
+    &--reference {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 0.7rem;
+      gap: 0.5rem;
+      color: $primary-color-5;
+    }
   }
 }

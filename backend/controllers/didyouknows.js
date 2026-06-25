@@ -88,6 +88,8 @@ exports.createDidYouKnow = async (req, res) => {
       answerImageUrls,
     })
 
+    console.log("Creating new Did You Know item:", didYouKnow)
+
     await didYouKnow.save()
 
     return res.status(201).json(didYouKnow)

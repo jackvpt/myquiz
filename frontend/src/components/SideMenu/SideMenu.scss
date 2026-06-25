@@ -24,18 +24,19 @@
       height: 48px;
       border: none;
       cursor: pointer;
-      color: $secondary-color-1;
+      color: $text-color-1;
+      border-left: 3px solid $primary-color-2;
 
       &:hover {
-        color: $primary-color-1;
-        background-color: $secondary-color-2;
+        color: $text-color-3;
+        background-color: $secondary-color-4;
         border-left: 3px solid $secondary-color-1;
       }
 
       &.active {
-        color: $primary-color-1;
-        background-color: $secondary-color-1;
-        border-left: 3px solid $secondary-color-2;
+        color: $text-color-3;
+        background-color: $secondary-color-4;
+        border-left: 3px solid $secondary-color-1;
       }
     }
   }

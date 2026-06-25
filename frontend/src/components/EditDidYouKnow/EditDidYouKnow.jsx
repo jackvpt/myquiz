@@ -48,18 +48,26 @@ const EditDidYouKnow = () => {
     setForm((prev) => ({
       ...prev,
       [field]: value,
+
       ...(field === "contentIllustrationFile" && value
         ? {
             contentIllustrationPreview: URL.createObjectURL(value),
+          }
+        : {}),
+
+      ...(field === "answerImageFiles" && value
+        ? {
+            answerImagePreviews: Array.isArray(value)
+              ? value.map((file) => URL.createObjectURL(file))
+              : [URL.createObjectURL(value)],
           }
         : {}),
     }))
   }
 
   const handleCreate = () => {
-    console.log("Creating DidYouKnow:", form)
     const didyouknow = new DidYouKnowModel(form)
-    console.log("DidYouKnowModel instance:", didyouknow)
+
     if (!didyouknow.isValid()) {
       console.log("Data not valid")
       return
@@ -78,7 +86,7 @@ const EditDidYouKnow = () => {
       referenceId: "H160_TECH_AFCS_001",
       documentationRef:
         "FLM VOL 2 > DESC > AFCS > OPS MODES > ADV UPPER MODES > GO AROUND",
-      text: "When GA is coupled, green mode labels are displayed for 15s (from cruise flight) or 30 s (from hover)",
+      text: "When GA is coupled, green mode labels are displayed for 15s (from cruise flight) or 30 s (from hover).",
       difficulty: "medium",
     }
 
@@ -176,9 +184,11 @@ const EditDidYouKnow = () => {
           <CustomButton action="create" onClick={handleCreate} />
         </div>
       </div>
-      <div className="container__edit-didyouknow--preview">
-        <DisplayDidYouKnow didYouKnow={form} />
-      </div>
+      {form.text && (
+        <div className="container__edit-didyouknow--preview">
+          <DisplayDidYouKnow didYouKnow={form} />
+        </div>
+      )}
     </section>
   )
 }
