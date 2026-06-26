@@ -79,5 +79,17 @@
         }
       }
     }
+
+    &--counter {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 1rem;
+      font-size: 1rem;
+    }
   }
 }

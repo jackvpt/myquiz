@@ -88,6 +88,9 @@ const ImageCarousel = ({ images = [] }) => {
               <FontAwesomeIcon icon={faCircleChevronRight} size="sm" />
             </button>
           )}
+          <div className="container__imagesCarousel__carousel--counter">
+            {currentIndex + 1} / {images.length}
+          </div>
         </div>
       )}
     </>
