@@ -30,13 +30,13 @@
       &:hover {
         color: $text-color-3;
         background-color: $secondary-color-4;
-        border-left: 3px solid $secondary-color-1;
+        border-left: 3px solid $secondary-color-5;
       }
 
       &.active {
         color: $text-color-3;
         background-color: $secondary-color-4;
-        border-left: 3px solid $secondary-color-1;
+        border-left: 3px solid $secondary-color-5;
       }
     }
   }

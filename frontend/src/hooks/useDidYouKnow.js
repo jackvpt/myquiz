@@ -58,15 +58,16 @@ export const useDidYouKnows = ({ enabled = true } = {}) => {
       const didyouknows = await fetchDidYouKnows()
 
       return didyouknows.map((didyouknow) =>
-        didyouknow instanceof DidYouKnowModel ? didyouknow : new DidYouKnowModel(didyouknow),
+        didyouknow instanceof DidYouKnowModel
+          ? didyouknow
+          : new DidYouKnowModel(didyouknow),
       )
     },
-
     enabled,
-
     keepPreviousData: true,
-    staleTime: 1000 * 60,
-    refetchInterval: 60000,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    refetchInterval: 1000 * 60 * 10, // 10 minutes
+    refetchOnWindowFocus: false,
   })
 }
 

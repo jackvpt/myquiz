@@ -4,6 +4,8 @@ const router = express.Router()
 const upload = require("../middleware/upload/imageUpload")
 const didyouknowsCtrl = require("../controllers/didyouknows")
 
+router.get("/", didyouknowsCtrl.getAllDidYouKnows)
+
 router.post(
   "/",
   upload.fields([

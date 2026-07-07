@@ -7,6 +7,9 @@ import { faLightbulb, faBookmark } from "@fortawesome/free-solid-svg-icons"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 
 const DisplayDidYouKnow = ({ didYouKnow }) => {
+  if (!didYouKnow) {
+    return null
+  }
   return (
     <section className="container__displaydidyouknow">
       {/* TITLE */}

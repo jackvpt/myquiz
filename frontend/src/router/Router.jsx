@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom"
 
 import Layout from "../Layout/Layout"
 import Quiz from "../pages/Quiz/Quiz"
-import DidYouKnow from "../pages/DidYouKnow/DidYouKnow"
+import PageDidYouKnow from "../pages/PageDidYouKnow/PageDidYouKnow"
 
 import Home from "../pages/Home/Home"
 import Error from "../pages/Error/Error"
@@ -23,9 +23,9 @@ const Router = () => {
         </>
       ) : (
         <Route element={<Layout />}>
-          <Route path="/" element={<DidYouKnow />} />
+          <Route path="/" element={<PageDidYouKnow />} />
           <Route path="/quiz" element={<Quiz />} />
-          <Route path="/didyouknow" element={<DidYouKnow />} />
+          <Route path="/didyouknow" element={<PageDidYouKnow />} />
 
           <Route path="/account" element={<Account />} />
 

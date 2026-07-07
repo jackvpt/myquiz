@@ -58,15 +58,16 @@ export const useQuestions = ({ enabled = true } = {}) => {
       const questions = await fetchQuestions()
 
       return questions.map((question) =>
-        question instanceof QuestionModel ? question : new QuestionModel(question),
+        question instanceof QuestionModel
+          ? question
+          : new QuestionModel(question),
       )
     },
-
     enabled,
-
     keepPreviousData: true,
-    staleTime: 1000 * 60,
-    refetchInterval: 60000,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    refetchInterval: 1000 * 60 * 10, // 10 minutes
+    refetchOnWindowFocus: false,
   })
 }
 

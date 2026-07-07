@@ -3,8 +3,9 @@
 
 .container__didyouknow{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
+    gap: 1rem;
     padding:1rem;
 }
