@@ -1,6 +1,11 @@
 import "./EditDidYouKnow.scss"
 
-import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+
+import {
+  updateEdited,
+  selectEditedDidYouKnow,
+} from "../../store/features/didYouKnowSlice"
 
 import DidYouKnowModel from "../../models/DidYouKnowModel"
 
@@ -11,45 +16,10 @@ import CustomButtonsDifficulty from "../subComponents/Buttons/CustomButtonsDiffi
 
 import { useCreateDidYouKnow } from "../../hooks/useDidYouKnow"
 
-const emptyDidYouKnow = {
-  theme: "",
-  domain: "",
-  section: "",
-  family: "",
-  category: "",
-  topic: "",
-
-  referenceId: "",
-  documentationRef: "",
-
-  contentIllustrationFile: null,
-  contentIllustrationPreview: null,
-
-  text: "",
-
-  difficulty: "easy",
-
-  answerImageFiles: [],
-  answerImagePreviews: [],
-
-  order: 1,
-}
-
-const EditDidYouKnow = ({ didYouKnow, onChange }) => {
-  const [form, setForm] = useState(didYouKnow ?? emptyDidYouKnow)
-
-  /**
-   * Quand la ligne du tableau change
-   */
-  useEffect(() => {
-    setForm(didYouKnow ?? emptyDidYouKnow)
-  }, [didYouKnow])
-
-  const updateForm = (updated) => {
-    setForm(updated)
-
-    onChange?.(updated)
-  }
+const EditDidYouKnow = () => {
+  const dispatch = useDispatch()
+  const form = useSelector(selectEditedDidYouKnow)
+  const { mutate: createDidYouKnow, isPending } = useCreateDidYouKnow()
 
   const handleChange = (field) => (event) => {
     const value =
@@ -59,26 +29,51 @@ const EditDidYouKnow = ({ didYouKnow, onChange }) => {
           : event.target.files[0]
         : event.target.value
 
-    updateForm({
-      ...form,
+    dispatch(
+      updateEdited({
+        [field]: value,
 
-      [field]: value,
+        ...(field === "contentIllustrationFile" && value
+          ? {
+              contentIllustrationPreview: URL.createObjectURL(value),
+              removeContentIllustration: false,
+            }
+          : {}),
 
-      ...(field === "contentIllustrationFile" && value
-        ? {
-            contentIllustrationPreview: URL.createObjectURL(value),
-          }
-        : {}),
-
-      ...(field === "answerImageFiles" && value
-        ? {
-            answerImagePreviews: value.map((file) => URL.createObjectURL(file)),
-          }
-        : {}),
-    })
+        ...(field === "answerImageFiles" && value
+          ? {
+              answerImagePreviews: value.map((file) =>
+                URL.createObjectURL(file),
+              ),
+            }
+          : {}),
+      }),
+    )
   }
 
-  const { mutate: createDidYouKnow, isPending } = useCreateDidYouKnow()
+  const handleRemoveIllustration = () => {
+    dispatch(
+      updateEdited({
+        contentIllustrationFile: null,
+        contentIllustrationPreview: null,
+        removeContentIllustration: true,
+      }),
+    )
+  }
+
+  const handleRemoveAnswerImage = (urlToRemove) => {
+    dispatch(
+      updateEdited({
+        answerImagePreviews: form.answerImagePreviews.filter(
+          (url) => url !== urlToRemove,
+        ),
+        removedAnswerImageUrls: [
+          ...form.removedAnswerImageUrls,
+          urlToRemove,
+        ],
+      }),
+    )
+  }
 
   const handleSave = () => {
     const model = new DidYouKnowModel(form)
@@ -90,42 +85,46 @@ const EditDidYouKnow = ({ didYouKnow, onChange }) => {
     createDidYouKnow(model)
   }
 
+  if (!form) {
+    return null
+  }
+
   return (
     <section className="container__edit-didyouknow">
       <div className="container__edit-didyouknow--form">
         <CustomTextField
           label="Theme"
-          value={form.theme}
+          value={form.theme.name}
           onChange={handleChange("theme")}
         />
 
         <CustomTextField
           label="Domaine"
-          value={form.domain}
+          value={form.domain.name}
           onChange={handleChange("domain")}
         />
 
         <CustomTextField
           label="Section"
-          value={form.section}
+          value={form.section.name}
           onChange={handleChange("section")}
         />
 
         <CustomTextField
           label="Family"
-          value={form.family}
+          value={form.family.name}
           onChange={handleChange("family")}
         />
 
         <CustomTextField
           label="Category"
-          value={form.category}
+          value={form.category.name}
           onChange={handleChange("category")}
         />
 
         <CustomTextField
           label="Topic"
-          value={form.topic}
+          value={form.topic.name}
           onChange={handleChange("topic")}
         />
 
@@ -141,11 +140,25 @@ const EditDidYouKnow = ({ didYouKnow, onChange }) => {
           onChange={handleChange("documentationRef")}
         />
 
-        <CustomFileSelect
-          label="Illustration"
-          value={form.contentIllustrationFile}
-          onChange={handleChange("contentIllustrationFile")}
-        />
+        <div className="illustration-field">
+          <CustomFileSelect
+            label="Illustration"
+            value={form.contentIllustrationFile}
+            onChange={handleChange("contentIllustrationFile")}
+          />
+
+          {form.contentIllustrationPreview && (
+            <div className="illustration-preview">
+              <button
+                type="button"
+                className="remove-btn"
+                onClick={handleRemoveIllustration}
+              >
+                ✕
+              </button>
+            </div>
+          )}
+        </div>
 
         <CustomTextField
           label="Text"
@@ -160,12 +173,31 @@ const EditDidYouKnow = ({ didYouKnow, onChange }) => {
           onChange={handleChange("difficulty")}
         />
 
-        <CustomFileSelect
-          label="Images"
-          value={form.answerImageFiles}
-          onChange={handleChange("answerImageFiles")}
-          multiple
-        />
+        <div className="answer-images-field">
+          <CustomFileSelect
+            label="Images"
+            value={form.answerImageFiles}
+            onChange={handleChange("answerImageFiles")}
+            multiple
+          />
+
+          {form.answerImagePreviews.length > 0 && (
+            <div className="answer-images-preview">
+              {form.answerImagePreviews.map((url) => (
+                <div key={url} className="answer-image-item">
+                  <img src={url} alt="" />
+                  <button
+                    type="button"
+                    className="remove-btn"
+                    onClick={() => handleRemoveAnswerImage(url)}
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
 
         <CustomButton
           action="create"

@@ -4,7 +4,7 @@ import "./SearchBar.scss"
 import { useState } from "react"
 import CustomTextField from "../CustomTextField/CustomTextField"
 import { useDispatch } from "react-redux"
-import { setSearch } from "../../../features/searchSlice"
+import { setSearch } from "../../../store/features/searchSlice"
 
 const SearchBar = () => {
   const dispatch = useDispatch()

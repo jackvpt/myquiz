@@ -17,8 +17,16 @@ const CustomTextField = ({
   copy = false,
   multiline = false,
   rows = 4,
+  selectOnFocus = true,
 }) => {
   const [focused, setFocused] = useState(false)
+
+  const handleFocus = (e) => {
+    setFocused(true)
+    if (selectOnFocus) {
+      e.target.select()
+    }
+  }
 
   const isFilled =
     value &&
@@ -53,7 +61,7 @@ const CustomTextField = ({
             value={value}
             rows={rows}
             disabled={disabled}
-            onFocus={() => setFocused(true)}
+            onFocus={handleFocus}
             onBlur={() => setFocused(false)}
             onChange={onChange}
           />
@@ -68,7 +76,7 @@ const CustomTextField = ({
             type={type}
             value={value}
             disabled={disabled}
-            onFocus={() => setFocused(true)}
+            onFocus={handleFocus}
             onBlur={() => setFocused(false)}
             onChange={onChange}
           />

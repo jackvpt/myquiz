@@ -26,16 +26,17 @@ const PageDidYouKnow = () => {
   }
 
   return (
-    <section className="container__didyouknow">
+    <section className="container__pagedidyouknow">
       <TableDidYouKnow
         didyouknows={didyouknows}
         selected={selected}
         onSelect={setSelected}
       />
 
-      <EditDidYouKnow didYouKnow={selected} onChange={setSelected} />
-
-      <DisplayDidYouKnow didYouKnow={selected} />
+      <div className="container__pagedidyouknow__content">
+        <EditDidYouKnow didYouKnow={selected} onChange={setSelected} />
+        <DisplayDidYouKnow didYouKnow={selected} />
+      </div>
     </section>
   )
 }

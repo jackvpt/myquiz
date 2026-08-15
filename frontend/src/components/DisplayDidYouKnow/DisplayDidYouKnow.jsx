@@ -6,10 +6,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLightbulb, faBookmark } from "@fortawesome/free-solid-svg-icons"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 
-const DisplayDidYouKnow = ({ didYouKnow }) => {
+import { useSelector } from "react-redux"
+import { selectEditedDidYouKnow } from "../../store/features/didYouKnowSlice"
+
+const DisplayDidYouKnow = () => {
+  const didYouKnow = useSelector(selectEditedDidYouKnow)
+
   if (!didYouKnow) {
     return null
   }
+
   return (
     <section className="container__displaydidyouknow">
       {/* TITLE */}
@@ -36,7 +42,7 @@ const DisplayDidYouKnow = ({ didYouKnow }) => {
             className={`difficulty-light hard ${
               didYouKnow.difficulty === "hard" ? "active" : ""
             }`}
-          />{" "}
+          />
         </div>
 
         {/* ILLUSTRATION */}
@@ -56,9 +62,11 @@ const DisplayDidYouKnow = ({ didYouKnow }) => {
         </div>
 
         {/* ANSWER IMAGES */}
-        <div className="container__displaydidyouknow--content--answer-images">
-          <ImageCarousel images={didYouKnow.answerImagePreviews} />
-        </div>
+        {didYouKnow.answerImagePreviews && didYouKnow.answerImagePreviews.length > 0 && (
+          <div className="container__displaydidyouknow--content--answer-images">
+            <ImageCarousel images={didYouKnow.answerImagePreviews} />
+          </div>
+        )}
 
         {/* REFERENCE */}
         <div className="container__displaydidyouknow--content--reference">

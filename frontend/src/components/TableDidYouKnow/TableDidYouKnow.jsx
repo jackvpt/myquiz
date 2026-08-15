@@ -1,48 +1,49 @@
 // TableDidYouKnow.jsx
 import "./TableDidYouKnow.scss"
 
-const TableDidYouKnow = ({ didyouknows = [], onSelect }) => {
+import { useDispatch } from "react-redux"
+import { setEdited } from "../../store/features/didYouKnowSlice"
+
+const TableDidYouKnow = ({ didyouknows = [] }) => {
+  const dispatch = useDispatch()
+
+  const handleSelect = (didyouknow) => {
+    dispatch(setEdited(didyouknow.toEditableState()))
+  }
+
   return (
     <table className="container__table-didyouknow">
       <thead>
         <tr>
-          <th>Référence</th>
+          <th>Reference</th>
           <th>Documentation</th>
-          <th>Illustration</th>
           <th>Texte</th>
-          <th>Difficulté</th>
-          <th>Images</th>
+          <th>Difficulty</th>
         </tr>
       </thead>
 
       <tbody>
-        {didyouknows.map((didyouknow) => (
-          <tr key={didyouknow.reference} onClick={() => onSelect?.(didyouknow)}>
-            <td>{didyouknow.reference}</td>
+        {didyouknows.map((didyouknow) => {
+          return (
+            <tr
+              key={didyouknow.referenceId}
+              onClick={() => handleSelect(didyouknow)}
+            >
+              <td>{didyouknow.referenceId}</td>
+              <td>{didyouknow.documentationRef}</td>
 
-            <td>{didyouknow.documentation}</td>
+              <td className="text-cell">{didyouknow.text}</td>
 
-            <td>{didyouknow.illustration}</td>
-
-            <td className="text-cell">{didyouknow.text}</td>
-
-            <td>
-              <span
-                className={`difficulty difficulty--${didyouknow.difficulty}`}
-              >
-                {didyouknow.difficulty}
-              </span>
-            </td>
-
-            <td>
-              <div className="images-cell">
-                {didyouknow.images?.map((image, index) => (
-                  <img key={index} src={image} alt="" />
-                ))}
-              </div>
-            </td>
-          </tr>
-        ))}
+              <td>
+                <span
+                  className={`difficulty difficulty--${didyouknow.difficulty}`}
+                >
+                  {didyouknow.difficulty}
+                </span>
+              </td>
+            </tr>
+          )
+        })}
       </tbody>
     </table>
   )

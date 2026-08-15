@@ -1,11 +1,21 @@
 @use "../../styles/utils/variables" as *;
 @use "../../styles/utils/mixins" as *;
 
-.container__didyouknow{
+.container__pagedidyouknow{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     gap: 1rem;
     padding:1rem;
+}
+
+.container__pagedidyouknow__content{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap:2rem;
+    padding:1rem;
+    border:1px solid $primary-color-4;
+    border-radius:0.5rem;
 }

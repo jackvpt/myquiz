@@ -3,15 +3,17 @@ import { persistStore, persistReducer } from "redux-persist"
 import storage from "redux-persist/lib/storage"
 
 // 🧩 Slices
-import userReducer from "../features/userSlice"
-import selectedAccountReducer from "../features/selectedAccountSlice"
-import searchAccountReducer from "../features/searchSlice"
+import userReducer from "./features/userSlice"
+import selectedAccountReducer from "./features/selectedAccountSlice"
+import searchAccountReducer from "./features/searchSlice"
+import didYouKnowReducer from "./features/didYouKnowSlice"
 
 // 🔗 Combine all reducers
 const rootReducer = combineReducers({
   user: userReducer,
   selectedAccount: selectedAccountReducer,
   searchAccount: searchAccountReducer,
+  didYouKnow: didYouKnowReducer,
 })
 
 // 💾 Persist config
@@ -43,6 +45,9 @@ export const store = configureStore({
         ignoredPaths: [
           "selectedAccount.createdAt",
           "selectedAccount.updatedAt",
+          // ⚠️ File objects (contentIllustrationFile, answerImageFiles) are not serializable, so we ignore them in the redux-persist serializable check
+          "didYouKnow.edited.contentIllustrationFile",
+          "didYouKnow.edited.answerImageFiles",
         ],
       },
     }),

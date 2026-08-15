@@ -4,7 +4,7 @@ import { validateToken } from "../api/auth.api"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
-import { setUser, clearUser } from "../features/userSlice"
+import { setUser, clearUser } from "../store/features/userSlice"
 
 /**
  * Custom hook to validate the authentication token.
