@@ -6,23 +6,17 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  gap:2rem;
-  
+  gap: 2rem;
+
   &--form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 
-    &--buttons {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      gap: 0.5rem;
+    &--illustration{
+      &--image{
+  width:200px;
+      }
     }
-  }
-
-  &--preview{
-    padding:2rem;
-    border:1px solid $primary-color-4;
   }
 }

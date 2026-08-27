@@ -1,11 +1,16 @@
 // TableDidYouKnow.jsx
 import "./TableDidYouKnow.scss"
 
-import { useDispatch } from "react-redux"
-import { setEdited } from "../../store/features/didYouKnowSlice"
+import { useSelector, useDispatch } from "react-redux"
+import {
+  setEdited,
+  selectEditedDidYouKnow,
+} from "../../store/features/didYouKnowSlice"
 
 const TableDidYouKnow = ({ didyouknows = [] }) => {
   const dispatch = useDispatch()
+
+  const editedDidYouKnow = useSelector(selectEditedDidYouKnow)
 
   const handleSelect = (didyouknow) => {
     dispatch(setEdited(didyouknow.toEditableState()))
@@ -13,6 +18,12 @@ const TableDidYouKnow = ({ didyouknows = [] }) => {
 
   return (
     <table className="container__table-didyouknow">
+        <colgroup>
+    <col style={{ width: "10%" }} />
+    <col style={{ width: "30%" }} />
+    <col style={{ width: "45%" }} />
+    <col style={{ width: "15%" }} />
+  </colgroup>
       <thead>
         <tr>
           <th>Reference</th>
@@ -24,22 +35,25 @@ const TableDidYouKnow = ({ didyouknows = [] }) => {
 
       <tbody>
         {didyouknows.map((didyouknow) => {
+          const isSelected =editedDidYouKnow?.referenceId === didyouknow.referenceId
+
           return (
             <tr
-              key={didyouknow.referenceId}
+              key={didyouknow.id}
+              className={isSelected ? "selected" : ""}
               onClick={() => handleSelect(didyouknow)}
             >
               <td>{didyouknow.referenceId}</td>
               <td>{didyouknow.documentationRef}</td>
 
-              <td className="text-cell">{didyouknow.text}</td>
+              <td className="container__table-didyouknow--text-cell">{didyouknow.text}</td>
 
-              <td>
-                <span
+              <td className="container__table-didyouknow--difficulty">
+                <div
                   className={`difficulty difficulty--${didyouknow.difficulty}`}
                 >
                   {didyouknow.difficulty}
-                </span>
+                </div>
               </td>
             </tr>
           )

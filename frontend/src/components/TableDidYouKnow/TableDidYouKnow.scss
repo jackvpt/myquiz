@@ -7,54 +7,64 @@
 
   th {
     background: #f4f4f4;
-    text-align: left;
+    text-align: center;
     padding: 12px;
     border-bottom: 2px solid #ddd;
   }
 
   td {
     border-bottom: 1px solid #ddd;
-    vertical-align: middle;
   }
 
   tbody tr {
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.1s;
     font-size: 0.9rem;
 
     td,
     th {
-      height: 30px;
+      height: 26px;
       padding: 0 0.5rem;
     }
 
     &:hover {
-      background: rgba($secondary-color-1, 0.2);
+      background: $secondary-color-2;
+    }
+
+    &.selected {
+      background-color: rgba($secondary-color-2, 0.2);
     }
   }
 
-  .text-cell {
+  &--text-cell {
     max-width: 300px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .difficulty {
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 0.8rem;
+  &--difficulty {
+    text-align: center;
+    
+    .difficulty {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      width: 60px;
+      text-align: center;
 
-    &--easy {
-      background: #d8f3dc;
-    }
+      &--easy {
+        background: #d8f3dc;
+      }
 
-    &--medium {
-      background: #fff3bf;
-    }
+      &--medium {
+        background: #fff3bf;
+      }
 
-    &--hard {
-      background: #ffe3e3;
+      &--hard {
+        background: #ffe3e3;
+      }
     }
   }
 }

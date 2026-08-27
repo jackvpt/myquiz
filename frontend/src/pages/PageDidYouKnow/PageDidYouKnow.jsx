@@ -4,6 +4,10 @@ import "./PageDidYouKnow.scss"
 // REACT
 import { useState } from "react"
 
+// REDUX
+import { useSelector } from "react-redux"
+import { selectEditedDidYouKnow } from "../../store/features/didYouKnowSlice"
+
 // Components
 import EditDidYouKnow from "../../components/EditDidYouKnow/EditDidYouKnow"
 import TableDidYouKnow from "../../components/TableDidYouKnow/TableDidYouKnow"
@@ -14,6 +18,7 @@ import { useDidYouKnows } from "../../hooks/useDidYouKnow"
 
 const PageDidYouKnow = () => {
   const [selected, setSelected] = useState(null)
+  const selectedDidYouKnow = useSelector(selectEditedDidYouKnow)
 
   const { data: didyouknows = [], isLoading, isError } = useDidYouKnows()
 
@@ -33,10 +38,12 @@ const PageDidYouKnow = () => {
         onSelect={setSelected}
       />
 
-      <div className="container__pagedidyouknow__content">
-        <EditDidYouKnow didYouKnow={selected} onChange={setSelected} />
-        <DisplayDidYouKnow didYouKnow={selected} />
-      </div>
+      {selectedDidYouKnow && (
+        <div className="container__pagedidyouknow__content">
+          <EditDidYouKnow didYouKnow={selected} onChange={setSelected} />
+          <DisplayDidYouKnow didYouKnow={selected} />
+        </div>
+      )}
     </section>
   )
 }

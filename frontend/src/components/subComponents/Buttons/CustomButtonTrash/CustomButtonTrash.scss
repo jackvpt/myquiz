@@ -1,0 +1,27 @@
+@use "../../../../styles/utils/variables" as *;
+@use "../../../../styles/utils/mixins" as *;
+
+.trash-button {
+  border: none;
+  background: none;
+  color: $secondary-color-3;
+  cursor: pointer;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: darken($secondary-color-3, 20%);
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #dc3545;
+      outline-offset: 2px;
+    }
+  }
+}

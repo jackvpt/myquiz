@@ -5,7 +5,16 @@ import "./CustomFileSelect.scss"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFileImage } from "@fortawesome/free-solid-svg-icons"
 
-const CustomFileSelect = ({ label, value, onChange, multiple = false }) => {
+// Components
+import CustomButtonTrash from "../Buttons/CustomButtonTrash/CustomButtonTrash"
+
+const CustomFileSelect = ({
+  label,
+  value,
+  onChange,
+  onRemove,
+  multiple = false,
+}) => {
   const displayValue = () => {
     if (!value) return "No file selected"
 
@@ -30,7 +39,6 @@ const CustomFileSelect = ({ label, value, onChange, multiple = false }) => {
     if (typeof value === "string") {
       return value.split("/").pop()
     }
-
 
     return "No file selected"
   }
@@ -66,6 +74,7 @@ const CustomFileSelect = ({ label, value, onChange, multiple = false }) => {
         multiple={multiple}
         hidden
       />
+      <CustomButtonTrash onClick={onRemove} />
     </div>
   )
 }

@@ -116,4 +116,8 @@
   font-size: 0.75rem;
   color: $secondary-color-3;
   cursor: pointer;
+
+  &:hover {
+    color: darken($secondary-color-3, 20%);
+  }
 }

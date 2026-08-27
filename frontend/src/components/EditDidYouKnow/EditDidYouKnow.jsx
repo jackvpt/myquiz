@@ -15,10 +15,13 @@ import CustomButton from "../subComponents/Buttons/CustomButton/CustomButton"
 import CustomButtonsDifficulty from "../subComponents/Buttons/CustomButtonsDifficulty/CustomButtonsDifficulty"
 
 import { useCreateDidYouKnow } from "../../hooks/useDidYouKnow"
+import CustomButtonTrash from "../subComponents/Buttons/CustomButtonTrash/CustomButtonTrash"
 
 const EditDidYouKnow = () => {
   const dispatch = useDispatch()
   const form = useSelector(selectEditedDidYouKnow)
+
+  console.log("form :>> ", form)
   const { mutate: createDidYouKnow, isPending } = useCreateDidYouKnow()
 
   const handleChange = (field) => (event) => {
@@ -67,10 +70,7 @@ const EditDidYouKnow = () => {
         answerImagePreviews: form.answerImagePreviews.filter(
           (url) => url !== urlToRemove,
         ),
-        removedAnswerImageUrls: [
-          ...form.removedAnswerImageUrls,
-          urlToRemove,
-        ],
+        removedAnswerImageUrls: [...form.removedAnswerImageUrls, urlToRemove],
       }),
     )
   }
@@ -140,22 +140,23 @@ const EditDidYouKnow = () => {
           onChange={handleChange("documentationRef")}
         />
 
-        <div className="illustration-field">
+        <div className="container__edit-didyouknow--form--illustration">
           <CustomFileSelect
             label="Illustration"
             value={form.contentIllustrationFile}
             onChange={handleChange("contentIllustrationFile")}
+            onRemove={handleRemoveIllustration}
           />
 
           {form.contentIllustrationPreview && (
-            <div className="illustration-preview">
-              <button
-                type="button"
-                className="remove-btn"
-                onClick={handleRemoveIllustration}
-              >
-                ✕
-              </button>
+            <div>
+              <div key={form.contentIllustrationPreview}>
+                <img
+                  src={form.contentIllustrationPreview}
+                  alt=""
+                  className="container__edit-didyouknow--form--illustration--image"
+                />
+              </div>
             </div>
           )}
         </div>
